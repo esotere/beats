@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/materialize/css/materialize.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <base href="/">
+
+
+
+</head>
+
+<body >
+    <div class="wrap">
+        <!-- <img src="./assets/images/background.gif" alt=""> -->
+        <!-- <video autoplay muted loop id="myVideo">
+            <source src="./assets/videos/background.gif" type="gif">
+          </video>
+
+          <button id="myBtn" onclick="myFunction()">Pause</button> -->
+        <div class="box">
+
+            <header>
+                <div class="nav">
+                    
+                    <div>
+                        <button type="button" class=" btn btn-warning">
+                            <a href="landing.html" target="">Landing</a>
+                        </button>
+                        <button type="button" class=" btn btn-warning">
+                            <a href="catalog.html" target="">Catalog</a>
+                        </button>
+                        <button type="button" class=" btn btn-warning">
+                            <a href="contact.html" target="">Contact</a>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+
+            <div class="content">
+                <div class="col-md-8">
+                    <div id="slideshow" class="left-content">
+                        <!-- <audio controls>
+                                    <source src="assets/audio/AUD-20170805-WA0000.mp3" type="audio/mp3">
+                                  Your browser does not support the audio element.
+                                  </audio>
+                            <audio controls>
+                                <source src="assets/audio/captainplanet24.mp3" type="audio/mp3">
+                                Your browser does not support the audio element.
+                                </audio> -->
+                        <!-- <div>
+
+                                </div> -->
+                        <div id="left-div"><span id="left-img"></span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                    <div class="right-content">
+                        <!-- Artist Select Box -->
+                        <form id="artist-form">
+
+                            <!-- Label for Text Box -->
+                            <label id="search-label" for="artist-input">Search For Artist/Producer</label>
+                            <br>
+                            <!-- Text Input Box -->
+                            <input type="text" id="artist-input"><br>
+
+                            <!-- Submit Button -->
+                            <input class="btn btn-warning" id="select-artist" type="submit" value="GO!">
+                        </form>
+
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="jump col-md-12">
+                <!-- Artist Information -->
+                <div class="artist-info" id="artist-div"></div>
+                
+                <div class="view">
+                    
+                    <div class="scrollbar scrollbar-secondary preview col-md-6">
+                        <h5>Beats By Sovereign. Click Listen To Explore</h5>
+                        <div id="music-list">                       
+                            <!-- <ol type="1">
+                            <li>lepi</li>
+                            <li>lepi</li>
+                            <li>lepi</li>
+                        </ol> -->
+                     </div>
+                    </div>
+                    <div class=" scrollbar scrollbar-secondary preview col-md-3">
+                        <h5> Recent Uploads</h5>
+                        <div id="recentUploads">
+                            <!-- <ol  type="1">
+                            <li>lepi</li>
+                            <li>lepi</li>
+                            <li>lepi</li>
+                        </ol> -->
+                    </div>
+                    </div>
+                    <div class="scrollbar scrollbar-secondary preview col-md-3">
+                        <h5>Upload Beats</h5>
+                        <form action="">
+
+                            <label for="producer name">Producer Name</label><input id="pname" type="text"><br>
+                            <label for="beat name">Beat Name</label><input id="bname" type="text"><br>
+                            <label for="beat upload" id="upload">Upload Beat</label><br><br>
+                            <input type="file" name="" value="" id="entry" > 
+                            <!-- <label for="fileupload"> Select a file to upload</label>  -->
+                            <!-- <input type="submit" value="submit"> -->
+                            <button type="button" class=" btn btn-warning">
+                                Clear
+                            </button>
+                            <button id="submit" type="button" class=" btn btn-warning">
+                                Submit
+                            </button>
+                            
+                        </form>
+
+                            <!-- <ol  type="1">
+                            <li>lepi</li>
+                            <li>lepi</li>
+                            <li>lepi</li>
+                        </ol> -->
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="col-md-12 bottom">
+                <div class="col-md-12 picks">
+                    <h5>All Beats Click to Explore</h5>
+                    <div id="allBeats"></div>
+
+                </div>
+
+                <!-- <div class="container" >
+                    <div class="keyboard"></div> 
+                 
+                </div> -->
+
+                <!-- <div class="settingsBar">
+                            <div class="left">
+                              <span>Volume: </span>
+                              <input type="range" min="0.0" max="1.0" step="0.01"
+                                  value="0.5" list="volumes" name="volume">
+                              <datalist id="volumes">
+                                <option value="0.0" label="Mute">
+                                <option value="1.0" label="100%">
+                              </datalist>
+                            </div>
+                            <div class="right">
+                                    <span>Current waveform: </span>
+                                    <select name="waveform">
+                                      <option value="sine">Sine</option>
+                                      <option value="square" selected>Square</option>
+                                      <option value="sawtooth">Sawtooth</option>
+                                      <option value="triangle">Triangle</option>
+                                      <option value="custom">Custom</option>
+                                    </select>
+                                  </div>
+                                </div> -->
+            </div>
+
+            <!--Footer-->
+            <footer class="footer font-small " id="footer">
+                
+                <!--Footer Links-->
+                <div class="container-fluid text-center text-md-left ">
+                    <div class="row ">
+                        
+                        <!-- <hr> -->
+                        <!--First column-->
+                        <div class="col-md-12 ">
+                            <hr>
+                            
+                            <h5 class="text ">Powered by Minimalist Eye Designs</h5>
+                            <!--Copyright-->
+                            <div class="footer-copyright font-small py-2 text-center ">
+                                © 2018 Copyright: Minimalist Eye Designs
+                            </div>
+                            <!--/.Copyright--><!-- </div> -->
+                            <!--/.First column-->
+                            
+                            <!--Second column-->
+                            <!-- <div class="col-md-6 "> -->
+                                <!-- <h5 class="footer">About The Team</h5>
+                                    <ul class="list-unstyled ">
+                                        
+                                        <li>
+                                            <a href="https://github.com/esotere">Uche Okonkwo</a>
+                                        </li>
+                                    </ul> -->
+                                </div>
+                                <!--/.Second column-->
+                            </div>
+                        </div>
+                        <!--/.Footer Links-->
+                        <hr>
+                        
+                        
+                    </footer>
+                    <hr>
+                    
+                </div>
+    </div>
+
+
+    
+<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAt2oY9E12glHwPvW3EecmxmKa6f3_yvb0",
+    authDomain: "evident-post-176218.firebaseapp.com",
+    databaseURL: "https://evident-post-176218.firebaseio.com",
+    projectId: "evident-post-176218",
+    storageBucket: "evident-post-176218.appspot.com",
+    messagingSenderId: "494945618221"
+  };
+  firebase.initializeApp(config);
+</script>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- javascript -->
+    <script src="./assets/logic/app.js" type="text/javascript"></script>
+    <!-- <script src="./music-dbConnection.js"></script> -->
+    <!-- materialize -->
+    <script src="./assets/styles/materialize/js/materialize.js"></script>
+    
+</body>
+
+</html>
