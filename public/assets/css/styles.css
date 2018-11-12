@@ -40,6 +40,7 @@ body {
   margin-top: 4em;
   padding: 5px;
   margin-right: 2em;
+  position: relative
 }
 
 .nav-btns {
@@ -115,6 +116,7 @@ body {
     float: right;
     margin-top: 2em;
     border-radius: 2%;
+    overflow: hidden;
 
 }
 .right-content-result {
@@ -324,6 +326,7 @@ img {
   /* padding: 10px; */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   overflow: hidden;
+  margin-left: 11%;
 }
 
 #slideshow > div {
@@ -356,6 +359,7 @@ img {
   vertical-align: baseline;
   padding: 5px;
 }
+
 .picks {
   border: lightgrey solid 1px;
   height: 25em;
@@ -377,6 +381,32 @@ img {
   background: #000;
   overflow-y: scroll;
   margin-bottom: 25px;
+}
+
+@media screen and (min-width: 600px) {
+  .wrap,.col-md-3,.col-md-4,.col-md-6, .c0l-md-8, .col-md-12 {
+    flex: 1 1 calc(50% - 2rem);
+  }
+  .slides2 {
+    display: block;
+    background: grey;
+    position: absolute;
+    opacity: .9;
+    float: left;
+    /* height: 30em; */
+    /* margin: 20px; */
+    /* margin-top: 173px; */
+    width: 100%;
+    background-size: contain;
+    /* padding: 10px; */
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); */
+  }
+}
+
+@media screen and (min-width: 400px) {
+  .wrap,.col-md-3,.col-md-4,.col-md-6, .c0l-md-8, .col-md-12 {
+    flex: 1 1 calc(33% - 2rem);
+  }
 }
 
 @media screen and (max-width: 1030px) {
@@ -518,4 +548,15 @@ input[type=file] {
 }
 .others {
   color: darkblue;
+}
+.buying {
+  background: darkgreen;
+  color: #eef;
+}
+.bing {
+  display: inline-block;
+  margin-left: 10px 
+}
+#allBeats {
+  /* display: inline-block; */
 }

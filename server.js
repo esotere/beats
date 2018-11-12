@@ -2,28 +2,30 @@
 // let fs = require("fs");
 // let http = require("http");
 let express = require("express");
-let app = express();
 let bodyParser = require("body-parser");
+let app = express();
 // let path = require("path");
 // let db = require("../database");
-
-
 let routes = require("./controllers/beatsController.js");
 
-app.use(routes);
+
+
+// Define a port to listen for incoming requests
+let PORT = process.env.PORT || 8000;
+
 
 app.use(express.static(__dirname + "/public"))
 
 
 // // Sets up the Express app to handle data parsing
+// app.use(require('connect').bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({type: "application/*+json"}));
+app.use(bodyParser.raw({type:"application/*+json"}));
+app.use(bodyParser.text({ type:"text/html"}));
+// app.use(jsonParser);
 
-
-// Define a port to listen for incoming requests
-let PORT = 7000;
-
-
+app.use(routes);
 
 
 

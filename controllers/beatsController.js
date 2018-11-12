@@ -12,7 +12,49 @@ router.get("/", function(req, res) {
       beats: data
     };
     console.log(hbsObject);
+    res.sendFile(path.join(__dirname, "../public/login.html"));
+  });
+});
+router.get("/landing", function(req, res) {
+  beat.all(function(data) {
+    let hbsObject = {
+      beats: data
+    };
+    console.log(hbsObject);
     res.sendFile(path.join(__dirname, "../public/landing.html"));
+  });
+});
+
+router.get("/catalog", function(req, res) {
+  beat.all(function(data) {
+    let hbsObject = {
+      beats: data
+    };
+    console.log(hbsObject);
+    // res.json(hbsObject);
+    res.sendFile(path.join(__dirname, "../public/catalog.html"));
+  });
+});
+
+router.get("/contact", function(req, res) {
+  beat.all(function(data) {
+    let hbsObject = {
+      beats: data
+    };
+    console.log(hbsObject);
+    // res.json(hbsObject);
+    res.sendFile(path.join(__dirname, "../public/contact.html"));
+  });
+});
+
+router.get("/api/beats", function(req, res) {
+  beat.all(function(data) {
+    let hbsObject = {
+      beats: data
+    };
+    console.log(hbsObject);
+    res.json(hbsObject);
+    // res.sendFile(path.join(__dirname, "../public/catalog.html"));
   });
 });
 
@@ -20,9 +62,9 @@ router.post("/api/beats", function(req, res) {
   // console.log(req)
   // console.log(req.body)
   beat.create([
-    "beat_name", "triumph"
+    "beat_name", "producer_name","source"
   ], [
-    req.body.beat_name, req.body.triumph
+    req.body.beat_name, req.body.producer_name, req.body.file_source
   ], function(result) {
     // Send back the ID of the new quote
     res.json({ id: result.insertId });
