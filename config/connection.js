@@ -9,8 +9,25 @@ let connection = mySql.createConnection({
   database: "music"
 });
 
+let connection2 = mySql.createConnection({
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "2823",
+  database: "profile"
+});
+
+
 // Make connection.
 connection.connect(function(err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + connection.threadId);
+});
+
+connection2.connect(function(err) {
   if (err) {
     console.error("error connecting: " + err.stack);
     return;

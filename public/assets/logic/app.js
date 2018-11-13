@@ -158,12 +158,12 @@ $(function () {
   $("#submit").on("click", function (event) {
     // event.preventDefault();
 
-    let filename = $("#entry").val().trim().split('\\').pop()
+    let filepath = $("#entry").val().trim().split('\\').pop()
 
     let newBeat = {
       beat_name: $("#bname").val().trim(),
       producer_name: $("#pname").val().trim(),
-      file_source: filename,
+      file_source: filepath,
     };
 
     // Send the POST request.
@@ -191,6 +191,8 @@ $(function () {
       text: 'listen',
       click: () => {
         alert('straight fire');
+        let filename = "localhost:8000/" + filepath
+        console.log(filename)
         let audio = new Audio(filename);
         audio.play();
       }
@@ -346,8 +348,11 @@ $(function () {
           text: 'listen',
           click: () => {
             alert('straight fire');
-            let audio = new Audio(rowsToAdd[0][i].source);
-            audio.play();
+            // let audio = new Audio(rowsToAdd[0][i].source);
+            let filename = "localhost:8000/" + rowsToAdd[0][i].source
+            console.log(filename)
+            let audio = new Audio(filename);
+            audio.play();;
           }
         }).addClass("listen");
         let b4 = $(('<button/>'), {
