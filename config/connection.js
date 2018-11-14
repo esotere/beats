@@ -68,15 +68,15 @@ db_connect.connect(function(err) {
   console.log("connected as id " + connection.threadId);
 });
 
-db_connect.query("SELECT * FROM Beats", function (err, result) {
-  if (err) throw err;
-  let sound =[];
-  for (let i = 0; i < result.length; i++) {
-      const element = result[i];
-      sound.push(element)
-      console.log(JSON.stringify(element))
-     }
-  })
+// db_connect.query("SELECT * FROM Beats", function (err, result) {
+//   if (err) throw err;
+//   let sound =[];
+//   for (let i = 0; i < result.length; i++) {
+//       const element = result[i];
+//       sound.push(element)
+//       console.log(JSON.stringify(element))
+//      }
+//   })
 
 
 // let populate = () => {
