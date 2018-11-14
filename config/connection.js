@@ -3,7 +3,7 @@ let mySql = require("mysql");
 
 let connection = mySql.createConnection({
   host: "localhost",
-  port: 3306,
+  port: 3306 || process.env.PORT,
   user: "root",
   password: "2823",
   database: "music"
@@ -11,12 +11,19 @@ let connection = mySql.createConnection({
 
 let connection2 = mySql.createConnection({
   host: "localhost",
-  port: 3306,
+  port: 3306 || process.env.PORT,
   user: "root",
   password: "2823",
   database: "profile"
 });
 
+let db_connect = mySql.createConnection({
+  host: "us-cdbr-iron-east-01.cleardb.net",
+  port: 3306 || process.env.PORT,
+  user: "bf9e08609b0e0f",
+  password: "936b3524",
+  database: "heroku_37f45dbc402f94e"
+});
 
 // Make connection.
 connection.connect(function(err) {
@@ -28,6 +35,14 @@ connection.connect(function(err) {
 });
 
 connection2.connect(function(err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + connection.threadId);
+});
+
+db_connect.connect(function(err) {
   if (err) {
     console.error("error connecting: " + err.stack);
     return;
