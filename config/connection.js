@@ -33,6 +33,15 @@ let db_connect = mySql.createConnection({
     database: "music"
   });
 
+let db_connect2 = mySql.createConnection({
+    host: "localhost",
+    port: 3306 || process.env.DATABASE_URL,
+    user: "bf9e08609b0e0f",
+    password: "2823",
+    database: "profile"
+  });
+
+  
 //   let pool = db_connect.createPool({
 //     connectionLimit : 10,
 //     host            : process.env.MYSQL_HOST,
@@ -61,6 +70,14 @@ connection2.connect(function(err) {
 });
 
 db_connect.connect(function(err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + connection.threadId);
+});
+
+db_connect2.connect(function(err) {
   if (err) {
     console.error("error connecting: " + err.stack);
     return;

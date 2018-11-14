@@ -6,7 +6,7 @@ let router = express.Router();
 // let login = require("../models/login.js");
 
 // Create all our routes and set up logic within those routes where required.
-router2.get("/login", function(req, res) {
+router.get("/login", function(req, res) {
   if (req.user) {
     res.redirect("/members");
   }
