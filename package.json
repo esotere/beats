@@ -23,5 +23,13 @@
     "handlebars-helper-css": "^0.1.0"
   },
   "keywords": [],
-  "description": ""
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/esotere/beats.git"
+  },
+  "bugs": {
+    "url": "https://github.com/esotere/beats/issues"
+  },
+  "homepage": "https://github.com/esotere/beats#readme"
 }

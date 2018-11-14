@@ -19,19 +19,29 @@ let connection2 = mySql.createConnection({
 
 // let db_connect = mySql.createConnection({
 //   host: "us-cdbr-iron-east-01.cleardb.net",
-//   port: 3306 || process.env.PORT,
+//   port: 3306 || process.env.DATABASE_URL,
 //   user: "bf9e08609b0e0f",
-//   password: "936b3524",
-//   database: "heroku_37f45dbc402f94e"
+//   password: "2823",
+//   database: "music"
 // });
 
 let db_connect = mySql.createConnection({
     host: "localhost",
-    port: 3306 || process.env.PORT,
+    port: 3306 || process.env.DATABASE_URL,
     user: "bf9e08609b0e0f",
     password: "2823",
     database: "music"
   });
+
+//   let pool = db_connect.createPool({
+//     connectionLimit : 10,
+//     host            : process.env.MYSQL_HOST,
+//     user            : process.env.MYSQL_USER,
+//     password        : process.env.MYSQL_SECRET,
+//     database        : process.env.MYSQL_DB,
+//     port            : '3306',
+//     ssl             : "Amazon RDS",
+// })
   
 // Make connection.
 connection.connect(function(err) {
