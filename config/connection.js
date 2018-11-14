@@ -19,7 +19,7 @@ let connection2 = mySql.createConnection({
 
 // let db_connect = mySql.createConnection({
 //   host: "us-cdbr-iron-east-01.cleardb.net",
-//   port: 3306 || process.env.DATABASE_URL,
+//   port: process.env.DATABASE_URL,
 //   user: "bf9e08609b0e0f",
 //   password: "2823",
 //   database: "music"
