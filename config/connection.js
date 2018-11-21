@@ -7,7 +7,7 @@ let connection = mySql.createConnection({
   user: "root",
   password: "2823",
   database: "music"
-});
+}); 
 
 let connection2 = mySql.createConnection({
   host: "z37udk8g6jiaqcbx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
@@ -17,15 +17,15 @@ let connection2 = mySql.createConnection({
   database: "uaxmv188hre8n38t"
 });
 
-let connection3 = mySql.createConnection({
-  // connectionLimit : 100,
-  host : "us-cdbr-iron-east-01.cleardb.net",
-  port: 3306 || process.env.DATABASE_URL,
-  user : "bf9e08609b0e0f",
-  password : "936b3524",
-  database : 'heroku_37f45dbc402f94e',
-  // debug : 'false'
-});
+// let connection3 = mySql.createConnection({
+//   // connectionLimit : 100,
+//   host : "us-cdbr-iron-east-01.cleardb.net",
+//   port: 3306 || process.env.DATABASE_URL,
+//   user : "bf9e08609b0e0f",
+//   password : "936b3524",
+//   database : 'heroku_37f45dbc402f94e',
+//   // debug : 'false'
+// });
 
 // let connection2 = mySql.createConnection({
 //   host: "localhost",
@@ -96,13 +96,13 @@ connection2.connect(function(err) {
 });
 
 
-connection3.connect(function(err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
-  console.log("connected as id " + connection.threadId);
-});
+// connection3.connect(function(err) {
+//   if (err) {
+//     console.error("error connecting: " + err.stack);
+//     return;
+//   }
+//   console.log("connected as id " + connection.threadId);
+// });
 
 // db_connect.connect(function(err) {
 //   if (err) {
