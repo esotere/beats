@@ -3,43 +3,51 @@ let mySql = require("mysql");
 
 let connection = mySql.createConnection({
   host: "localhost",
-  port: 3306 || process.env.PORT,
+  port: 3306 || process.env.DATABASE_URL,
   user: "root",
   password: "2823",
   database: "music"
 });
 
-let connection2 = mySql.createConnection({
-  host: "localhost",
-  port: 3306 || process.env.PORT,
-  user: "root",
-  password: "2823",
-  database: "profile"
-});
-
-// let db_connect = mySql.createConnection({
-//   host: "us-cdbr-iron-east-01.cleardb.net",
-//   port: process.env.DATABASE_URL,
-//   user: "bf9e08609b0e0f",
+// let connection2 = mySql.createConnection({
+//   host: "localhost",
+//   port: 3306 || process.env.DATABASE_URL,
+//   user: "root",
 //   password: "2823",
-//   database: "music"
+//   database: "profile"
 // });
 
-let db_connect = mySql.createConnection({
-    host: "localhost",
-    port: 3306 || process.env.DATABASE_URL,
-    user: "bf9e08609b0e0f",
-    password: "2823",
-    database: "music"
-  });
+// // let connection3 = mySql.createConnection({
+// //   host: "localhost",
+// //   port: 3306 || process.env.DATABASE_URL,
+// //   user: "root",
+// //   password: "2823",
+// //   database: "profile"
+// // });
 
-let db_connect2 = mySql.createConnection({
-    host: "localhost",
-    port: 3306 || process.env.DATABASE_URL,
-    user: "bf9e08609b0e0f",
-    password: "2823",
-    database: "profile"
-  });
+// // let db_connect = mySql.createConnection({
+// //   host: "us-cdbr-iron-east-01.cleardb.net",
+// //   port: process.env.DATABASE_URL,
+// //   user: "bf9e08609b0e0f",
+// //   password: "2823",
+// //   database: "music"
+// // });
+
+// let db_connect = mySql.createConnection({
+//     host: "localhost",
+//     port: 3306 || process.env.DATABASE_URL,
+//     user: "bf9e08609b0e0f",
+//     password: "2823",
+//     database: "music"
+//   });
+
+// let db_connect2 = mySql.createConnection({
+//     host: "localhost",
+//     port: 3306 || process.env.DATABASE_URL,
+//     user: "bf9e08609b0e0f",
+//     password: "2823",
+//     database: "profile"
+//   });
 
   
 //   let pool = db_connect.createPool({
@@ -61,29 +69,29 @@ connection.connect(function(err) {
   console.log("connected as id " + connection.threadId);
 });
 
-connection2.connect(function(err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
-  console.log("connected as id " + connection.threadId);
-});
+// connection2.connect(function(err) {
+//   if (err) {
+//     console.error("error connecting: " + err.stack);
+//     return;
+//   }
+//   console.log("connected as id " + connection.threadId);
+// });
 
-db_connect.connect(function(err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
-  console.log("connected as id " + connection.threadId);
-});
+// db_connect.connect(function(err) {
+//   if (err) {
+//     console.error("error connecting: " + err.stack);
+//     return;
+//   }
+//   console.log("connected as id " + connection.threadId);
+// });
 
-db_connect2.connect(function(err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
-  console.log("connected as id " + connection.threadId);
-});
+// db_connect2.connect(function(err) {
+//   if (err) {
+//     console.error("error connecting: " + err.stack);
+//     return;
+//   }
+//   console.log("connected as id " + connection.threadId);
+// });
 
 // db_connect.query("SELECT * FROM Beats", function (err, result) {
 //   if (err) throw err;
@@ -113,3 +121,4 @@ db_connect2.connect(function(err) {
 
 // Export connection for our ORM to use.
 module.exports = connection;
+ 

@@ -4,6 +4,7 @@
 let express = require("express");
 let bodyParser = require("body-parser");
 let app = express();
+let connect = require("connect")
 // let path = require("path");
 // let db = require("../database");
 let routes = require("./controllers/beatsController.js");
@@ -22,12 +23,12 @@ app.use(express.static(__dirname + "/public"))
 
 
 // // Sets up the Express app to handle data parsing
-app.use(require('connect').bodyParser());
+// app.use(connect);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({type: "application/*+json"}));
 app.use(bodyParser.raw({type:"application/*+json"}));
 app.use(bodyParser.text({ type:"text/html"}));
-// app.use(jsonParser);
+// app.use(bodyParser);
 
 // app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());

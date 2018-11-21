@@ -1,14 +1,18 @@
 $(document).ready(function() {
   // Getting references to our form and input
-  var signUpForm = $("form.signup");
-  var emailInput = $("input#email-input");
-  var passwordInput = $("input#password-input");
+  let signUpForm = $("form.signup");
+  let nameInput = $("#name-input")
+  let emailInput = $("#email-input");
+  let passwordInput = $("#password-input");
+  let userNameInput = $("#username-input")
 
   // When the signup button is clicked, we validate the email and password are not blank
   signUpForm.on("submit", function(event) {
     event.preventDefault();
-    var userData = {
+    let userData = {
+      name: nameInput.val().trim(), 
       email: emailInput.val().trim(),
+      username: userNameInput.val().trim(),
       password: passwordInput.val().trim()
     };
 
@@ -16,19 +20,30 @@ $(document).ready(function() {
       return;
     }
     // If we have an email and password, run the signUpUser function
-    signUpUser(userData.email, userData.password);
+    signUpUser(userData.name, userData.email, userData.username, userData.password);
+    nameInput.val("");
     emailInput.val("");
+    userNameInput.val("")
     passwordInput.val("");
+    console.log("posted")
   });
 
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
-  function signUpUser(email, password) {
-    $.post("/api/signup", {
+  function signUpUser(email, password, username, password) {
+    $.post("/api/music", {
       email: email,
+      password: password,
+      username: username,
       password: password
     }).then(function(data) {
-      window.location.replace(data);
+      console.log(data);
+
+      // window.location.replace(data);
+      document.location.href = "/login.html";
+
+      // res.sendFile(path.join(__dirname, "../public/login.html"));
+
       // If there's an error, handle it by throwing up a bootstrap alert
     }).catch(handleLoginErr);
   }

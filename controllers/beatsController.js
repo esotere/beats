@@ -14,7 +14,7 @@ let passport = require("../config/passport");
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
   if (req.user) {
-    res.redirect("/members");
+    res.redirect("/landing");
   }
    
     res.sendFile(path.join(__dirname, "../public/signup.html"));
@@ -23,9 +23,9 @@ router.get("/", function(req, res) {
 
 
 router.get("/login", function(req, res) {
-  // If the user already has an account send them to the members page
+  // If the user already has an account send them to the landing page
   if (req.user) {
-    res.redirect("/members");
+    res.redirect("/landing");
   }
   res.sendFile(path.join(__dirname, "../public/login.html"));
 });
@@ -33,7 +33,7 @@ router.get("/login", function(req, res) {
 // Here we've add our isAuthenticated middleware to this route.
 // If a user who is not logged in tries to access this route they will be redirected to the signup page
 router.get("/members", isAuthenticated, function(req, res) {
-  res.sendFile(path.join(__dirname, "../public/members.html"));
+  res.sendFile(path.join(__dirname, "../public/landing.html"));
 });
 
 router.get("/landing", function(req, res) {
@@ -108,7 +108,7 @@ router.get('/download', function(req,res){
 
 
 
-router.get("/contact", function(req, res) {
+router.get("/contact", isAuthenticated, function(req, res) {
   beat.all(function(data) {
     let hbsObject = {
       beats: data
@@ -119,7 +119,7 @@ router.get("/contact", function(req, res) {
   });
 });
 
-router.get("/api/beats", function(req, res) {
+router.get("/api/music", function(req, res) {
   beat.all(function(data) {
     let hbsObject = {
       beats: data
@@ -130,7 +130,7 @@ router.get("/api/beats", function(req, res) {
   });
 });
 
-router.post("/api/beats", function(req, res) {
+router.post("/api/music", function(req, res) {
   // console.log(req)
   // console.log(req.body)
   beat.create([
@@ -143,7 +143,7 @@ router.post("/api/beats", function(req, res) {
   });
 });
 
-router.put("/api/beats/:id", function(req, res) {
+router.put("/api/music/:id", function(req, res) {
   let condition = "id = " + req.params.id;
 
   console.log("condition", condition);
@@ -160,7 +160,7 @@ router.put("/api/beats/:id", function(req, res) {
   });
 });
 
-router.delete("/api/beats/:id", function(req, res) {
+router.delete("/api/music/:id", function(req, res) {
   let condition = "id = " + req.params.id;
 
   beat.delete(condition, function(result) {
@@ -179,7 +179,7 @@ router.delete("/api/beats/:id", function(req, res) {
 // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
-  router.post("/api/login", passport.authenticate("local"), function(req, res) {
+  router.post("/api/music", passport.authenticate("local"), function(req, res) {
     // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
     // So we're sending the user back the route to the members page because the redirect will hrouteren on the front end
     // They won't get this or even be able to access this page if they aren't authed
@@ -189,10 +189,12 @@ router.delete("/api/beats/:id", function(req, res) {
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
-  router.post("/api/signup", function(req, res) {
+  router.post("/api/music", function(req, res) {
     console.log(req.body);
     db.User.create({
       email: req.body.email,
+      password: req.body.password,
+      username: req.body.username,
       password: req.body.password
     }).then(function() {
       res.redirect(307, "/api/login");
@@ -202,6 +204,7 @@ router.delete("/api/beats/:id", function(req, res) {
       // res.status(422).json(err.errors[0].message);
     });
   });
+  
 
   // Route for logging user out
   router.get("/logout", function(req, res) {
