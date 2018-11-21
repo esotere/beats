@@ -9,6 +9,14 @@ let connection = mySql.createConnection({
   database: "music"
 });
 
+let connection2 = mySql.createConnection({
+  host: "z37udk8g6jiaqcbx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+  port: 3306 || process.env.DATABASE_URL,
+  user: "kg5nho8mdqkri9th",
+  password: "j83enajffdqe75ug",
+  database: "uaxmv188hre8n38t"
+});
+
 // let connection2 = mySql.createConnection({
 //   host: "localhost",
 //   port: 3306 || process.env.DATABASE_URL,
@@ -69,13 +77,13 @@ connection.connect(function(err) {
   console.log("connected as id " + connection.threadId);
 });
 
-// connection2.connect(function(err) {
-//   if (err) {
-//     console.error("error connecting: " + err.stack);
-//     return;
-//   }
-//   console.log("connected as id " + connection.threadId);
-// });
+connection2.connect(function(err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + connection.threadId);
+});
 
 // db_connect.connect(function(err) {
 //   if (err) {
