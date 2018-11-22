@@ -9,6 +9,15 @@ let connection = mySql.createConnection({
   database: "music"
 }); 
 
+let connex = mySql.createPool({
+  connectionLimit : 10,
+  host: "us-cdbr-iron-east-01.cleardb.net",
+  port: 3306 || process.env.DATABASE_URL,
+  user: "b8f110d168277b",
+  password: "7943e50b",
+  database: "heroku_97cebdf044d1a55"
+});
+
 let connection2 = mySql.createConnection({
   host: "z37udk8g6jiaqcbx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
   port: process.env.DATABASE_URL,
@@ -108,6 +117,13 @@ connection2.connect(function(err) {
   console.log("connected as id " + connection.threadId);
 });
 
+connex.getConnection(function(err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + connection.threadId);
+});
 
 connection3.getConnection(function(err) {
   if (err) {
