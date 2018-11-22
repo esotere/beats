@@ -11,21 +11,34 @@ let connection = mySql.createConnection({
 
 let connection2 = mySql.createConnection({
   host: "z37udk8g6jiaqcbx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-  port: 3306 || process.env.DATABASE_URL,
+  port: process.env.DATABASE_URL,
   user: "kg5nho8mdqkri9th",
-  password: "j83enajffdqe75ug",
+  password: "yf6nwn8qb33urs68",
   database: "uaxmv188hre8n38t"
 });
 
-// let connection3 = mySql.createConnection({
-//   // connectionLimit : 100,
-//   host : "us-cdbr-iron-east-01.cleardb.net",
-//   port: 3306 || process.env.DATABASE_URL,
-//   user : "bf9e08609b0e0f",
-//   password : "936b3524",
-//   database : 'heroku_37f45dbc402f94e',
-//   // debug : 'false'
+let connection3 = mySql.createPool({
+  connectionLimit : 100,
+  host : "us-cdbr-iron-east-01.cleardb.net",
+  port:  process.env.DATABASE_URL,
+  user : "bf9e08609b0e0f",
+  password : "936b3524",
+  database : 'heroku_37f45dbc402f94e',
+  // debug : 'false'
+});
+
+// let connection3 = mySql.createConnection(process.env.JAWSDB_URL);
+
+// connection3.connect();
+
+// connection3.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+//   if (err) throw err;
+
+//   console.log('The solution is: ', rows[0].solution);
 // });
+
+// connection3.end();
+
 
 // let connection2 = mySql.createConnection({
 //   host: "localhost",
@@ -68,14 +81,14 @@ let connection2 = mySql.createConnection({
 //   });
 
   
-//   let pool = db_connect.createPool({
+//   let pool = mySql.createPool({
 //     connectionLimit : 10,
 //     host            : process.env.MYSQL_HOST,
 //     user            : process.env.MYSQL_USER,
 //     password        : process.env.MYSQL_SECRET,
 //     database        : process.env.MYSQL_DB,
-//     port            : '3306',
-//     ssl             : "Amazon RDS",
+//     port            : process.env.DATABASE_URL,
+//     // ssl             : "Amazon RDS",
 // })
   
 // Make connection.
@@ -96,7 +109,16 @@ connection2.connect(function(err) {
 });
 
 
-// connection3.connect(function(err) {
+connection3.getConnection(function(err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + connection.threadId);
+});
+
+
+// pool.getConnection(function(err) {
 //   if (err) {
 //     console.error("error connecting: " + err.stack);
 //     return;
