@@ -8,7 +8,8 @@ let isAuthenticated = require("../config/middleware/isAuthenticated");
 
 
 // Requiring our models and passport as we've configured it
-let db = require("../models/login.js");
+let login = require("../models/login.js");
+let signup = require("../models/signup.js");
 let passport = require("../config/passport");
 
 // Create all our routes and set up logic within those routes where required.
@@ -19,8 +20,6 @@ router.get("/", function(req, res) {
    
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
-
-
 
 router.get("/login", function(req, res) {
   // If the user already has an account send them to the landing page
@@ -187,21 +186,71 @@ router.delete("/api/music/:id", function(req, res) {
   });
 
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
-  // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
+  // how we configured our User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
-  router.post("/api/music", function(req, res) {
+  router.post("/api/signup", function(req, res) {
     console.log(req.body);
-    db.User.create({
-      email: req.body.email,
-      password: req.body.password,
-      username: req.body.username,
-      password: req.body.password
-    }).then(function() {
-      res.redirect(307, "/api/login");
-    }).catch(function(err) {
-      console.log(err);
-      res.json(err);
-      // res.status(422).json(err.errors[0].message);
+    signup.create([
+      "email", "name", "username", "password"
+    ], [
+      req.body.email, req.body.name, req.body.username, req.body.password
+    ], function(result) {
+      console.log(result);
+      // Send back the ID of the new member
+      // res.json({ serverStatus: result.serverStatus });
+      // res.redirect(200, "/login.html");
+      // res.location("/login.html");
+      res.sendFile(path.join(__dirname, "../public/login.html"));
+
+      
+    })
+    // .catch(function(err) {
+    //   console.log(err);
+    //   res.json(err);
+    //   res.status(422).json(err.errors[0].message);
+    // });     
+   
+    // signup.create({
+    //   email: req.body.email,
+    //   name: req.body.name,
+    //   username: req.body.username,
+    //   password: req.body.password
+    // }).then(function() {
+    //   res.redirect(307, "/api/login");
+    // }).catch(function(err) {
+    //   console.log(err);
+    //   res.json(err);
+    //   // res.status(422).json(err.errors[0].message);
+    // });
+  });
+
+  router.post("/api/logins", function(req, res) {
+    console.log(req.body);
+    login.create([
+       "username", "password"
+    ], [
+      req.body.username, req.body.password
+    ], function(result) {
+      console.log(result);
+      // Send back the ID of the new member
+      // res.json({ serverStatus: result.serverStatus });
+      // res.redirect(200, "/login.html");
+      // res.location("/login.html");
+      res.sendFile(path.join(__dirname, "../public/landing.html"));
+      
+      
+    // login.create({
+    //   email: req.body.email,
+    //   password: req.body.password,
+    //   // username: req.body.username,
+    //   // password: req.body.password
+    // }).then(function() {
+    //   res.sendFile(path.join(__dirname, "../public/contact.html"));
+    //   document.location.href = "/landing.html";
+    // }).catch(function(err) {
+    //   console.log(err);
+    //   res.json(err);
+    //   // res.status(422).json(err.errors[0].message);
     });
   });
   

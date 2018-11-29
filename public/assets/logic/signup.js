@@ -20,36 +20,53 @@ $(document).ready(function() {
       return;
     }
     // If we have an email and password, run the signUpUser function
-    signUpUser(userData.name, userData.email, userData.username, userData.password);
-    nameInput.val("");
-    emailInput.val("");
-    userNameInput.val("")
-    passwordInput.val("");
-    console.log("posted")
+    signUpUser(userData);
+    // nameInput.val("");
+    // emailInput.val("");
+    // userNameInput.val("")
+    // passwordInput.val("");
+    // console.log("posted")
   });
 
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
-  function signUpUser(email, password, username, password) {
-    $.post("/api/music", {
-      email: email,
-      password: password,
-      username: username,
-      password: password
-    }).then(function(data) {
-      console.log(data);
+  function signUpUser() {
+    let newMember = {
+      name: nameInput.val().trim(), 
+      email: emailInput.val().trim(),
+      username: userNameInput.val().trim(),
+      password: passwordInput.val().trim()
+    };
 
-      // window.location.replace(data);
-      document.location.href = "/login.html";
-
-      // res.sendFile(path.join(__dirname, "../public/login.html"));
-
-      // If there's an error, handle it by throwing up a bootstrap alert
-    }).catch(handleLoginErr);
-  }
-
-  function handleLoginErr(err) {
-    $("#alert .msg").text(err.responseJSON);
+    $.ajax("/api/signup", {
+      type: "POST",
+      data: newMember
+    }).then(
+      function () {
+        console.log("created new member");
+        // Reload the page to get the updated list
+        location.reload();
+        document.location.href = "/login.html";
+        
+      }).catch(handleLoginErr);
+      
+      
+      // $.post("/api/signup", {
+      //   newMember
+      // }).then(function(data) {
+      //   console.log(data);
+  
+      //   // window.location.replace(data);
+      //   document.location.href = "/login.html";
+  
+      //   // res.sendFile(path.join(__dirname, "../public/login.html"));
+  
+      //   // If there's an error, handle it by throwing up a bootstrap alert
+      // }).catch(handleLoginErr);  
+    }
+    
+    function handleLoginErr(err) {
+      $("#alert .msg").text(err.responseJSON);
     $("#alert").fadeIn(500);
   }
 });

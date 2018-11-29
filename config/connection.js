@@ -20,7 +20,7 @@ let connex = mySql.createPool({
 
 let connection2 = mySql.createConnection({
   host: "z37udk8g6jiaqcbx.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-  port: process.env.JAWSDB_URL,
+  port: 3306 || process.env.JAWSDB_URL,
   user: "kg5nho8mdqkri9th",
   password: "yf6nwn8qb33urs68",
   database: "uaxmv188hre8n38t"
@@ -29,7 +29,7 @@ let connection2 = mySql.createConnection({
 let connection3 = mySql.createPool({
   connectionLimit : 100,
   host : "us-cdbr-iron-east-01.cleardb.net",
-  port:  process.env.DATABASE_URL,
+  port:  3306 || process.env.DATABASE_URL,
   user : "bf9e08609b0e0f",
   password : "936b3524",
   database : 'heroku_37f45dbc402f94e',
