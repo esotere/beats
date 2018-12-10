@@ -244,7 +244,7 @@ router.get("/contact", function(req, res) {
   // });
 });
 
-router.get("/api/beats", function(req, res) {
+router.get("/api/music", function(req, res) {
   beat.all(function(data) {
     let hbsObject = {
       beats: data
@@ -255,7 +255,7 @@ router.get("/api/beats", function(req, res) {
   });
 });
 
-router.post("/api/beats", function(req, res) {
+router.post("/api/music", function(req, res) {
   // console.log(req)
   // console.log(req.body)
   beat.create([
@@ -268,7 +268,7 @@ router.post("/api/beats", function(req, res) {
   });
 });
 
-router.put("/api/beats/:id", function(req, res) {
+router.put("/api/music/:id", function(req, res) {
   let condition = "id = " + req.params.id;
 
   console.log("condition", condition);
@@ -285,7 +285,7 @@ router.put("/api/beats/:id", function(req, res) {
   });
 });
 
-router.delete("/api/beats/:id", function(req, res) {
+router.delete("/api/music/:id", function(req, res) {
   let condition = "id = " + req.params.id;
 
   beat.delete(condition, function(result) {

@@ -1,13 +1,20 @@
-DROP DATABASE IF EXISTS profile;
-CREATE DATABASE profile;
+USE music;
 
-USE profile;
+SET foreign_key_checks = 0;
+DROP TABLE logins;
+SET foreign_key_checks = 1;
+-- DROP TABLE IF EXISTS logins;
+
+DROP TABLE IF EXISTS members;
+
+
 
 CREATE TABLE logins (
     id INTEGER(11) AUTO_INCREMENT NOT NULL,
-    email VARCHAR(170)NOT NULL,
+    -- name VARCHAR(170)NOT NULL,
+    -- email VARCHAR(170)NOT NULL,
     -- beat_rating INTEGER(11),
-    user_name VARCHAR(170) NOT NULL,
+    username VARCHAR(170) NOT NULL,
     -- producer_rating INTEGER(11),
     password VARCHAR(200) NOT NULL,
     mastered BOOLEAN DEFAULT true,
@@ -20,12 +27,10 @@ CREATE TABLE logins (
     name VARCHAR(170) NOT NULL,
     email VARCHAR(170)NOT NULL,
     -- beat_rating INTEGER(11),
-    user_name VARCHAR(170) NOT NULL,
+    username VARCHAR(170) NOT NULL,
     -- producer_rating INTEGER(11),
     password VARCHAR(200) NOT NULL,
     mastered BOOLEAN DEFAULT true,
-    PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES logins(id)
-
-    
+    PRIMARY KEY (id)
+    -- FOREIGN KEY (id) REFERENCES logins(id)    
     );
