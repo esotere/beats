@@ -3,26 +3,48 @@
 // let http = require("http");
 let express = require("express");
 let bodyParser = require("body-parser");
+// Initialize Express
 let app = express();
 // let path = require("path");
 // let db = require("../database");
 let routes = require("./controllers/beatsController.js");
 // let session = require("express-session");
+// let mongojs = require("mongojs");
+
+
+
+
+// // Database configuration
+// // Save the URL of our database as well as the name of our collection
+// let databaseUrl = "music";
+// let collections = ["beats"];
+
+// // Use mongojs to hook the database to the db variable
+// let db = mongojs(databaseUrl, collections);
+
+// // This makes sure that any errors are logged if mongodb runs into an issue
+// db.on("error", function(error) {
+//   console.log("Database Error:", error);
+// });
+// let WaveSurfer = require('wavesurfer.js');
+// let TimelinePlugin = require('wavesurfer.js/dist/plugin/wavesurfer.timeline.min.js');
+// let MinimapPlugin = require('wavesurfer.js/dist/plugin/wavesurfer.minimap.min.js');
+ 
 
 // Requiring passport as we've configured it
-let passport = require("./config/passport.js");
+// let passport = require("./config/passport.js");
 
 
 
 // Define a port to listen for incoming requests
-let PORT = process.env.PORT || 8000;
+let PORT = process.env.PORT || 8080;
 
 
 app.use(express.static(__dirname + "/public"))
 
 
 // // Sets up the Express app to handle data parsing
-app.use(require('connect').bodyParser());
+// app.use(require('connect').bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({type: "application/*+json"}));
 app.use(bodyParser.raw({type:"application/*+json"}));
@@ -30,11 +52,21 @@ app.use(bodyParser.text({ type:"text/html"}));
 // app.use(jsonParser);
 
 // app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+
+// app.use(WaveSurfer());
 // app.use(passport.session());
 
 
 app.use(routes);
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "Access-Control-Allow-Origin: http://localhost:8080");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 
 

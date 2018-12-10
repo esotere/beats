@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,15 +33,21 @@
                 <div class="nav">
                     
                     <div>
-                        <button type="button" class=" btn btn-warning">
+                        <button type="button" class=" btn btn-secondary">
                             <a href="landing.html" target="">Landing</a>
                         </button>
-                        <button type="button" class=" btn btn-warning">
+                        <button type="button" class=" btn btn-secondary">
                             <a href="catalog.html" target="">Catalog</a>
                         </button>
-                        <button type="button" class=" btn btn-warning">
+                        <button type="button" class=" btn btn-secondary">
                             <a href="contact.html" target="">Contact</a>
                         </button>
+                        <button type="button" class=" btn btn-warning">
+                            <a href="shoppingCart.html" target="">
+                                <span class="glyphicon glyphicon-shopping-cart">
+                                    </span> cart</a>
+                        </button>
+    
 
                     </div>
 
@@ -62,7 +69,7 @@
                         <input type="text" id="artist-input"><br>
                         
                         <!-- Submit Button -->
-                        <input class="btn btn-warning" id="select-artist" type="submit" value="GO!">
+                        <input class="btn btn-success" id="select-artist" type="submit" value="GO!">
                     </form>
                     
                     
@@ -70,7 +77,7 @@
                 <!-- Artist Information -->
                 <div class="artist-info" id="artist-div"></div>
                 
-                
+                    <div id="waveform"></div>
                     <div id="slideshow" class="left-content">
                         <!-- <audio controls>
                                     <source src="assets/audio/AUD-20170805-WA0000.mp3" type="audio/mp3">
@@ -119,6 +126,7 @@
 
                             <label for="producer name">Producer Name</label><input id="pname" type="text"><br>
                             <label for="beat name">Beat Name</label><input id="bname" type="text"><br>
+                            <label for="price">Price($)</label><input id="price" type="number" min="0" step="0.01"><br>
                             <label for="beat upload" id="upload">Upload Beat</label><br><br>
                             <input type="file" name="" value="" id="entry" > 
                             <!-- <label for="fileupload"> Select a file to upload</label>  -->
@@ -150,34 +158,51 @@
                     <div id="allBeats"></div>
 
                 </div>
-
+                
                 <!-- <div class="container" >
                     <div class="keyboard"></div> 
-                 
+                    
                 </div> -->
-
+                
                 <!-- <div class="settingsBar">
-                            <div class="left">
-                              <span>Volume: </span>
-                              <input type="range" min="0.0" max="1.0" step="0.01"
-                                  value="0.5" list="volumes" name="volume">
-                              <datalist id="volumes">
-                                <option value="0.0" label="Mute">
+                    <div class="left">
+                        <span>Volume: </span>
+                        <input type="range" min="0.0" max="1.0" step="0.01"
+                        value="0.5" list="volumes" name="volume">
+                        <datalist id="volumes">
+                            <option value="0.0" label="Mute">
                                 <option value="1.0" label="100%">
-                              </datalist>
+                                </datalist>
                             </div>
                             <div class="right">
-                                    <span>Current waveform: </span>
-                                    <select name="waveform">
-                                      <option value="sine">Sine</option>
-                                      <option value="square" selected>Square</option>
-                                      <option value="sawtooth">Sawtooth</option>
-                                      <option value="triangle">Triangle</option>
-                                      <option value="custom">Custom</option>
-                                    </select>
-                                  </div>
-                                </div> -->
-            </div>
+                                <span>Current waveform: </span>
+                                <select name="waveform">
+                                    <option value="sine">Sine</option>
+                                    <option value="square" selected>Square</option>
+                                    <option value="sawtooth">Sawtooth</option>
+                                    <option value="triangle">Triangle</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                        </div> -->
+                    </div>
+                    
+                    <div class="scrollbar scrollbar-secondary picks preview col-md-12">
+                            <table id="results" class="highlight">
+                                    <thead>
+                                      <tr>
+                                        <th id="beat-name">Beat Name</th>
+                                        <th id="producer-name">Producer</th>
+                                        <th id="source">Source</th>
+                                        <th id="salePrice">Price</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <!-- Results from DB here -->
+                                    </tbody>
+                                  </table>
+        
+                    </div>
 
             <!--Footer-->
             <footer class="footer font-small " id="footer">
@@ -245,7 +270,9 @@
     <!-- <script src="./music-dbConnection.js"></script> -->
     <!-- materialize -->
     <script src="./assets/css/materialize/js/materialize.js"></script>
-    
+    <!-- wavesurfer -->
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+
 </body>
 
 </html>

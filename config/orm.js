@@ -1,5 +1,6 @@
 // Import MySQL connection.
-let connection = require("../config/connection.js");
+let connex = require("../config/connection.js");
+let connection =connex.connection;
 
 // Helper function for SQL syntax.
 // Let's say we want to pass 3 values into the mySQL query.

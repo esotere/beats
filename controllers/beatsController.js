@@ -1,40 +1,154 @@
 let express = require("express");
 let path = require("path")
 let router = express.Router();
+let fs = require("fs");
 
 // Import the model (beat.js) to use its database functions.
 let beat = require("../models/beat.js");
-let isAuthenticated = require("../config/middleware/isAuthenticated");
-
+let db = require("../models/beatModel.js");
 
 // Requiring our models and passport as we've configured it
-let db = require("../models/login.js");
-let passport = require("../config/passport");
+// let db = require("../models/login.js");
+// let passport = require("../config/passport");
+
+
+
+// Post a beat to the mongoose database
+router.post("/api/music", (req,res) => {
+              console.log(JSON.stringify(req.body));
+              console.log(req);
+
+  
+  // Save the request body as an object called track
+  let track = { 
+    // _id: req.body.id,
+    name: req.body.beat_name,
+    producer: req.body.producer_name,
+    price: req.body.price,
+    source: req.body.file_source,
+  }
+            console.log(track);
+
+  // db.BeatAlt.create([
+  //   "beat_name", "producer_name", "price", "source"
+  // ], [
+  //   req.body.beat_name, req.body.producer_name, req.body.price, req.body.file_source
+  // ], function(res) {
+  //   // Send back the ID of the new quote
+  //   res.json({ id: result.insertId });
+  // });
+  
+  // let beatAlt = new BeatAlt({data: track});
+  //   beatAlt.save(function (err) {
+  //       if (err) { 
+  //           console.log(err);
+  //     }
+  //     else {
+  //       // Otherwise, send the response to the client (for AJAX success function)
+  //       res.send(saved);
+  //     }
+  //   })
+
+  // If we want the object to have a boolean value of false,
+  // we have to do it here, because the ajax post will convert it
+  // to a string instead of a boolean
+  // beat.read = false;
+
+  // Save the beat object as an entry into the beats collection in mongo
+  db.BeatAlt.save(track.name, track.producer, track.price, track.source).then(function(item) {
+    // Show any errors
+      // item = track;
+      // console.log(item);
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+  
+    // else {
+    //   // Otherwise, send the response to the client (for AJAX success function)
+    //   res.send(saved);
+    // }
+ // });
+});
+
+
+// Fetch all Beats
+exports.findAll = (req, res) =>  {
+	console.log("Fetch all Beats");
+	
+    BeatAlt.find()
+    .then(beats => {
+        res.send(beats);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message
+        });
+    });
+};
+
+
+// //Save a beat to MongoDB
+// router.post('/api/music', BeatAlt.save);
+ 
+// // Retrieve all beats
+// router.get('/api/music/all', BeatAlt.findAll);
+
+// router.use("/",router);
+
+// router.use("*", (req,res) => {
+// res.sendFile(path + "404.html");
+// });
+
+
+
+
+
+
+// Route for getting all beats from the db
+router.get("/landing", function(req, res) {
+  // Using our BeatAlt model, "find" every beat in our db
+  db.BeatAlt.find({})
+    .then(function(beat) {
+      // If any Beats are found, send them to the client
+      res.json(beat);
+    })
+    .catch(function(err) {
+      // If an error occurs, send it back to the client
+      res.json(err);
+    });
+});
+
+
+
+
+
+
 
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
-  if (req.user) {
-    res.redirect("/members");
-  }
-   
-    res.sendFile(path.join(__dirname, "../public/signup.html"));
+  beat.all(function(data) {
+    let hbsObject = {
+      beats: data
+    };
+    console.log(hbsObject);
+    res.sendFile(path.join(__dirname, "../public/landing.html"));
+    });
   });
 
 
 
-router.get("/login", function(req, res) {
-  // If the user already has an account send them to the members page
-  if (req.user) {
-    res.redirect("/members");
-  }
-  res.sendFile(path.join(__dirname, "../public/login.html"));
-});
+// router.get("/login", function(req, res) {
+//   // If the user already has an account send them to the members page
+//   if (req.user) {
+//     res.redirect("/members");
+//   }
+//   res.sendFile(path.join(__dirname, "../public/login.html"));
+// });
 
-// Here we've add our isAuthenticated middleware to this route.
-// If a user who is not logged in tries to access this route they will be redirected to the signup page
-router.get("/members", isAuthenticated, function(req, res) {
-  res.sendFile(path.join(__dirname, "../public/members.html"));
-});
+// // Here we've add our isAuthenticated middleware to this route.
+// // If a user who is not logged in tries to access this route they will be redirected to the signup page
+// router.get("/members", isAuthenticated, function(req, res) {
+//   res.sendFile(path.join(__dirname, "../public/members.html"));
+// });
 
 router.get("/landing", function(req, res) {
   beat.all(function(data) {
@@ -55,6 +169,17 @@ router.get("/catalog", function(req, res) {
     // res.json(hbsObject);
     res.sendFile(path.join(__dirname, "../public/catalog.html"));
   });
+});
+
+router.get("/cart", function(req, res) {
+  // beat.find(function(data) {
+  //   let hbsObject = {
+  //     beats: data
+  //   };
+    // console.log(hbsObject);
+    // res.json(hbsObject);
+    res.sendFile(path.join(__dirname, "../public/shoppingCart.html"));
+  // });
 });
 
 
@@ -109,14 +234,14 @@ router.get('/download', function(req,res){
 
 
 router.get("/contact", function(req, res) {
-  beat.all(function(data) {
-    let hbsObject = {
-      beats: data
-    };
-    console.log(hbsObject);
+  // beat.all(function(data) {
+  //   let hbsObject = {
+  //     beats: data
+  //   };
+  //   console.log(hbsObject);
     // res.json(hbsObject);
     res.sendFile(path.join(__dirname, "../public/contact.html"));
-  });
+  // });
 });
 
 router.get("/api/beats", function(req, res) {
@@ -134,9 +259,9 @@ router.post("/api/beats", function(req, res) {
   // console.log(req)
   // console.log(req.body)
   beat.create([
-    "beat_name", "producer_name","source"
+    "beat_name", "producer_name", "price", "source"
   ], [
-    req.body.beat_name, req.body.producer_name, req.body.file_source
+    req.body.beat_name, req.body.producer_name, req.body.price, req.body.file_source
   ], function(result) {
     // Send back the ID of the new quote
     res.json({ id: result.insertId });
@@ -171,37 +296,37 @@ router.delete("/api/beats/:id", function(req, res) {
       res.status(200).end();
     }
   });
-});
+}); 
 
 
 
 
-// Using the passport.authenticate middleware with our local strategy.
-  // If the user has valid login credentials, send them to the members page.
-  // Otherwise the user will be sent an error
-  router.post("/api/login", passport.authenticate("local"), function(req, res) {
-    // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
-    // So we're sending the user back the route to the members page because the redirect will hrouteren on the front end
-    // They won't get this or even be able to access this page if they aren't authed
-    res.json("/members");
-  });
+// // Using the passport.authenticate middleware with our local strategy.
+//   // If the user has valid login credentials, send them to the members page.
+//   // Otherwise the user will be sent an error
+//   router.post("/api/login", passport.authenticate("local"), function(req, res) {
+//     // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
+//     // So we're sending the user back the route to the members page because the redirect will hrouteren on the front end
+//     // They won't get this or even be able to access this page if they aren't authed
+//     res.json("/members");
+//   });
 
-  // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
-  // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
-  // otherwise send back an error
-  router.post("/api/signup", function(req, res) {
-    console.log(req.body);
-    db.User.create({
-      email: req.body.email,
-      password: req.body.password
-    }).then(function() {
-      res.redirect(307, "/api/login");
-    }).catch(function(err) {
-      console.log(err);
-      res.json(err);
-      // res.status(422).json(err.errors[0].message);
-    });
-  });
+//   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
+//   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
+//   // otherwise send back an error
+//   router.post("/api/signup", function(req, res) {
+//     console.log(req.body);
+//     db.User.create({
+//       email: req.body.email,
+//       password: req.body.password
+//     }).then(function() {
+//       res.redirect(307, "/api/login");
+//     }).catch(function(err) {
+//       console.log(err);
+//       res.json(err);
+//       // res.status(422).json(err.errors[0].message);
+//     });
+//   });
 
   // Route for logging user out
   router.get("/logout", function(req, res) {

@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS test;
 DROP DATABASE IF EXISTS music;
 CREATE DATABASE music;
 
@@ -5,11 +6,12 @@ USE music;
 
 CREATE TABLE beats(
     id INTEGER(11) AUTO_INCREMENT NOT NULL,
-    beat_name VARCHAR(70),
+    beat_name NVARCHAR(70),
     -- beat_rating INTEGER(11),
-    producer_name VARCHAR(70),
+    producer_name NVARCHAR(70),
+    price DEC(5,2),
     -- producer_rating INTEGER(11),
-    source VARCHAR(200),
+    source NVARCHAR(200),
     mastered BOOLEAN DEFAULT true,
     PRIMARY KEY (id)
     

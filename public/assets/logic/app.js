@@ -157,12 +157,15 @@ $(function () {
   //=======================
   $("#submit").on("click", function (event) {
     // event.preventDefault();
+    mongoPost()
+    displayBeats()
 
     let filepath = $("#entry").val().trim().split('\\').pop()
 
     let newBeat = {
       beat_name: $("#bname").val().trim(),
       producer_name: $("#pname").val().trim(),
+      price: $("#price").val().trim(),
       file_source: filepath,
     };
 
@@ -182,21 +185,23 @@ $(function () {
     // $("#recentUploads").empty()
     // $(".right-content").removeClass().addClass("right-content-result")
     let upload = $("#entry").val().trim()
-    let prodUpload = $("#pname").val().trim()
     let beatUpload = $("#bname").val().trim()
-    let join1 = beatUpload + " <br>" + "by " + prodUpload + "<br>" + upload + "<br><br>"
+    let prodUpload = $("#pname").val().trim()
+    let price = $("#price").val().trim()
+    let join1 = beatUpload + " <br>" + "by " + prodUpload + "<br>" + "$" + price + "<br>" + upload + "<br><br>"
     let bdiv = $("<div>").addClass("buy");
-
+    
     let b1 = $('<button/>', {
       text: 'listen',
       click: () => {
         alert('straight fire');
-        let filename = "localhost:8000/" + filepath
+        let filename = "localhost:8080/" + filepath
         console.log(filename)
         let audio = new Audio(filename);
         audio.play();
       }
     }).addClass("listen");
+    
     let b2 = $(('<button/>'), {
       text: 'buy',
       click: () => {
@@ -204,46 +209,125 @@ $(function () {
         // this.addClass("buying")
         // this.text = "buying"
         alert('$$$$$$$');
-        let purchase = $("<div>").addClass("bing")
+        let purchase = $("<div>").addClass("bing");
         purchase.append("added to cart");
-        b2.append(purchase)
+        b2.append(purchase);
       }
     }).addClass("buying");
-
+    
     let y = bdiv.append(join1).append(b1).append(b2);
     // let r = bdiv.append(newBeat).append(b1).append(b2);
-
+    
     //  distribution()
     if (prodUpload === "sovereign") {
-
+      
       $("#music-list, #allBeats").prepend(y).addClass("sovereign");
-
+      
     } else {
-
-
+      
+      
       $("#recentUploads, #allBeats").prepend(y).addClass("others");
     }
     $("#allBeats").prepend(join1);
-
+    
+    
+    
   })
+  
+  //posting to mongo
+  function mongoPost() {
+    
+    let path = $("#entry").val().trim().split('\\').pop()
+    let newBeat = {
+      beat_name: $("#bname").val().trim(),
+      producer_name: $("#pname").val().trim(),
+      price: $("#price").val().trim(),
+      file_source: path,
+    };
 
+
+
+    let URL = 'mongodb://localhost/music';
+    let URL2 =  '/api/music';
+    let list = []
+    $.ajax({
+      type: "POST",
+      contentType : "application/json",
+      url: URL2,
+      dataType: "json",
+      data: JSON.stringify(newBeat)
+    })
+    .then(function(data) {
+      console.log("success");
+
+      // newBeat = data;
+      list.push(newBeat)
+    console.log(list);
+    displayBeats(list);
+      // console.log();
+      // getUnread();
+      // $("#author").val("");
+      // $("#title").val("");
+    });
+    return false;
+  }
+  
+  //reseting form
+  function resetData(){
+    $("#bname").val("")
+    $("#pname").val("")
+    $("#price").val("")
+    $("#entry").val("")
+  }
+  
+  
+  
+  //==============================================================================
+  //shopping cart
+  //========================================
+  
+  // adding to cart
+  let cart = $("#cart")
+  $(".buying").on("click", function(e) {
+    e.preventDefault();
+    cart.initializeRows()
+    console.log("initializing cart row")
+        let basket = [];
+        let item = $(this).siblings().find(".fit")
+        basket.push(item)
+        cart.prepend(item)
+        console.log(basket)
+        console.log(item)
+      })
   // $(".buying").on("click", function() {
   //       event.preventDefault();
   //         let icon = "added to cart"
   //         this.append(icon);
   // })
 
-  //==============================================================================
-  //shopping cart
-  //========================================
-
-
 
 
   //=================================================================================
-
-
+  //=========================================================================
+  //Waveform
   //=======================================================================
+//   let wavesurfer = WaveSurfer.create({
+//     container: '#waveform',
+//     waveColor: 'violet',
+//     progressColor: 'purple',
+//   //   plugins: [
+//   //     TimelinePlugin.create({
+//   //         container: '#wave-timeline'
+//   //     }),
+//   //     MinimapPlugin.create()
+//   // ]
+// });
+
+// wavesurfer.load('../audio/captainplanet24.mp3');
+
+// wavesurfer.on('ready', function () {
+//   wavesurfer.play();
+// });
 
 
   //==============================================================================
@@ -282,10 +366,12 @@ $(function () {
     $("#allBeats").empty();
     $("#music-list").empty();
     $("#recentUploads").empty();
+    $("#waveform2").empty();
     let rowsToAdd = [];
     let fill = $("#allBeats") //.addClass("local");
     let sovDiv = $("#music-list");
     let othDiv = $("#recentUploads");
+    let wave = $("#waveform2")
 
 
     // let b3 = $('<button/>', {
@@ -325,8 +411,10 @@ $(function () {
           "ID: " + rowsToAdd[0][i].id + "<br>" + 
           "Beat Name: " + rowsToAdd[0][i].beat_name + "<br>" +
           "Produced by: " + rowsToAdd[0][i].producer_name + "<br>" +
+          "price: $" +rowsToAdd[0][i].price + "<br>" +
           "source: " + rowsToAdd[0][i].source + "<br>" + 
-              "<span class='fit2'></span>" + "<br><br>" + 
+              "<span class='fit2'></span>" + "<br>" + 
+              "<span id='waveform2'></span>" + "<br><br>" + 
           "</div>";
 
           // $(".fit2").empty();
@@ -343,34 +431,71 @@ $(function () {
 
         // console.log(rowsToAdd[0])
 
+
+        
+
         
         let b3 = $('<button/>', {
           text: 'listen',
           click: () => {
             alert('straight fire');
             // let audio = new Audio(rowsToAdd[0][i].source);
-            let filename = "localhost:8000/" + rowsToAdd[0][i].source
+            let filename = "localhost:8080/music/" + rowsToAdd[0][i].source
             console.log(filename)
+
+            var url = filename + '/cors';
+            var xhr = createCORSRequest('GET', url);
+            xhr.send();
+
             let audio = new Audio(filename);
-            audio.play();;
+            audio.play();
+            let wavesurfer = WaveSurfer.create({
+              container: '#waveform2',
+              waveColor: 'violet',
+              progressColor: 'purple',
+            //   plugins: [
+            //     TimelinePlugin.create({
+            //         container: '#wave-timeline'
+            //     }),
+            //     MinimapPlugin.create()
+            // ]
+          });
+          
+          wavesurfer.load(filename);
+          
+          wavesurfer.on('ready', function () {
+            wavesurfer.play();
+          });
           }
         }).addClass("listen");
+
+
         let b4 = $(('<button/>'), {
           text: 'buy',
           click: () => {
+            
+            // $("#cart").val(initializeRows())
+            // console.log("initializing cart row")
+            //     let basket = [];
+            //     let item = $(this).siblings().find(".fit")
+            //     basket.push(item)
+            //     cart.prepend(item)
+            //     console.log(basket)
+            //     console.log(item)
+
             // event.preventDefault()
             // this.addClass("buying")
             // this.text = "buying"
             alert('$$$$$$$');
             let purchase = $("<div>").addClass("bing")
             purchase.append("added to cart");
-            b4.append(purchase)
+            b4.append(purchase);
           }
         }).addClass("buying");
         
         if (rowsToAdd[0][i].mastered === 1) { 
 
-          fill.prepend(sum) //.append(b3).append(b4);
+          fill.prepend(sum).append(wave) //.append(b3).append(b4);
           //**********************************************************
           //*why do I need to append buttons again for them to work  *
           //*almost as intended?                                     *
@@ -422,6 +547,62 @@ $(function () {
     });
 
   }
+
+//==============================================================================
+//populate from mongodb
+//========================================
+function displayBeats(beats) {
+  // First, empty the table
+  $("tbody").empty();
+
+  let filepath = $("#entry").val().trim().split('\\').pop()
+  let beatBox = []
+
+   beats = {
+    name: $("#bname").val().trim(),
+    producerName: $("#pname").val().trim(),
+    source: filepath,
+    price: $("#price").val().trim(),
+  };
+
+  for (let t = 0; t < beatBox.length; t++) {
+      beatBox.push(JSON.stringify(beats));
+      console.log(beatBox)
+    
+  }
+  // Then, for each entry of that json...
+  beatBox.forEach(function(beat) {
+    // Append each of the beat's properties to the table
+    $("tbody").append("<tr><td>" + beat.name + "</td>" +
+                          "<td>" + beat.producerName + "</td>" +
+                          "<td>" + beat.source + "</td>" +
+                          "<td>" + beat.price + "</td></tr>");
+  });
+}
+
+
+
+// First thing: ask the back end for json with all beats
+$.getJSON("/", function(data) {
+  for (var i = 0; i < data.length; i++) {
+    // let stuff = data
+    // console.log(stuff)
+    // Call our function to generate a table body
+    displayBeats(data);
+    $("tbody").append("<tr><td>" + beat.name + "</td>" +
+                          "<td>" + beat.producerName + "</td>" +
+                          "<td>" + beat.source + "</td>" +
+                          "<td>" + beat.price + "</td></tr>");
+                      }
+});
+
+
+
+
+//==============================================================================
+
+//========================================
+
 
 
 
