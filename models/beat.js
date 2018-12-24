@@ -25,5 +25,5 @@ let beat = {
   }
 };
 
-// Export the database functions for the controller (beatsController.js).
+// Export the database functions for the controller (musicController.js).
 module.exports = beat;

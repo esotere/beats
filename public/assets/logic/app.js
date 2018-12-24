@@ -171,7 +171,7 @@ $(function () {
     };
 
     // Send the POST request.
-    $.ajax("/api/beats", {
+    $.ajax("/api/music", {
       type: "POST",
       data: newBeat
     }).then(
@@ -579,13 +579,13 @@ $(function () {
   }
 
   function getBeatList() {
-    $.get("/api/beats", function (data) {
+    $.get("/api/music", function (data) {
       beats = data;
       initializeRows();
     });
     let beats = {}
     // Send the GET request.
-    $.ajax("/api/beats", {
+    $.ajax("/api/music", {
       type: "GET",
       data: beats
     }).then(function (data) {

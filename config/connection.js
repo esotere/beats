@@ -6,10 +6,19 @@ let mongoose = require("mongoose");
 
 let connection = mySql.createConnection({
   host: "localhost",
-  port: 3306 || process.env.PORT,
+  port: 3306 || process.env.DATABASE_URL,
   user: "root",
   password: "2823",
   database: "music"
+}); 
+
+let connex = mySql.createPool({
+  connectionLimit : 10,
+  host: "us-cdbr-iron-east-01.cleardb.net",
+  port: 3306 || process.env.DATABASE_URL,
+  user: "b8f110d168277b",
+  password: "7943e50b",
+  database: "heroku_97cebdf044d1a55"
 });
 
 // Connect to the Mongo DB
@@ -61,7 +70,7 @@ db2.on("error", function(error) {
 //   port: process.env.DATABASE_URL,
 //   user: "bf9e08609b0e0f",
 //   password: "2823",
-//   database: "music"
+//   database: "profile"
 // });
 
 // let db_connect = mySql.createConnection({
@@ -81,14 +90,14 @@ db2.on("error", function(error) {
 //   });
 
   
-//   let pool = db_connect.createPool({
+//   let pool = mySql.createPool({
 //     connectionLimit : 10,
 //     host            : process.env.MYSQL_HOST,
 //     user            : process.env.MYSQL_USER,
 //     password        : process.env.MYSQL_SECRET,
 //     database        : process.env.MYSQL_DB,
-//     port            : '3306',
-//     ssl             : "Amazon RDS",
+//     port            : process.env.DATABASE_URL,
+//     // ssl             : "Amazon RDS",
 // })
   
 // Make connection.
@@ -101,6 +110,31 @@ connection.connect(function(err) {
 });
 
 // connection2.connect(function(err) {
+//   if (err) {
+//     console.error("error connecting: " + err.stack);
+//     return;
+//   }
+//   console.log("connected as id " + connection.threadId);
+// });
+
+// db_connect.connect(function(err) {
+//   if (err) {
+//     console.error("error connecting: " + err.stack);
+//     return;
+//   }
+//   console.log("connected as id " + connection.threadId);
+// });
+
+// db_connect2.connect(function(err) {
+//   if (err) {
+//     console.error("error connecting: " + err.stack);
+//     return;
+//   }
+//   console.log("connected as id " + connection.threadId);
+// });
+
+
+// pool.getConnection(function(err) {
 //   if (err) {
 //     console.error("error connecting: " + err.stack);
 //     return;
