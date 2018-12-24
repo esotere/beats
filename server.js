@@ -3,8 +3,10 @@
 // let http = require("http");
 let express = require("express");
 let bodyParser = require("body-parser");
+let cors = require("cors");
 // Initialize Express
-let app = express();
+let app = express(); 
+// let jsonParser = require(json-parser);
 // let path = require("path");
 // let db = require("../database");
 let routes = require("./controllers/beatsController.js");
@@ -37,7 +39,7 @@ let routes = require("./controllers/beatsController.js");
 
 
 // Define a port to listen for incoming requests
-let PORT = process.env.PORT || 8080;
+let PORT = process.env.PORT || 8030;
 
 
 app.use(express.static(__dirname + "/public"))
@@ -49,7 +51,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({type: "application/*+json"}));
 app.use(bodyParser.raw({type:"application/*+json"}));
 app.use(bodyParser.text({ type:"text/html"}));
-// app.use(jsonParser);
+// app.use(bodyParser);
 
 // app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
 // app.use(passport.initialize());
@@ -67,6 +69,8 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+app.use(cors());
 
 
 
@@ -96,12 +100,7 @@ app.listen(PORT, function() {
 });
 
 
-// var express = require("express");
-// var bodyParser = require("body-parser");
 
-// var PORT = process.env.PORT || 8080;
-
-// var app = express();
 
 // // Serve static content for the app from the "public" directory in the application directory.
 // app.use(express.static("public"));
@@ -118,13 +117,4 @@ app.listen(PORT, function() {
 // app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 // app.set("view engine", "handlebars");
 
-// // Import routes and give the server access to them.
-// var routes = require("./controllers/catsController.js");
 
-// app.use(routes);
-
-// // Start our server so that it can begin listening to client requests.
-// app.listen(PORT, function() {
-//   // Log (server-side) when our server has started
-//   console.log("Server listening on: http://localhost:" + PORT);
-// });

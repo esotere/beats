@@ -20,6 +20,7 @@
 </head>
 
 <body >
+    <div class="container-fluid">
     <div class="wrap">
         <!-- <img src="./assets/images/background.gif" alt=""> -->
         <!-- <video autoplay muted loop id="myVideo">
@@ -74,22 +75,22 @@
                     
                     
                 </div>
+                <audio controls controlsList="nodownload">
+                            <source src="assets/audio/AUD-20170805-WA0000.mp3" type="audio/mp3">
+                          Your browser does not support the audio element.
+                          </audio>
+                    <audio controls>
+                        <source src="assets/audio/captainplanet24.mp3" type="audio/mp3">
+                        Your browser does not support the audio element.
+                        </audio> 
+                <!-- <div>
+
+                        </div>
                 <!-- Artist Information -->
                 <div class="artist-info" id="artist-div"></div>
                 
                     <div id="waveform"></div>
                     <div id="slideshow" class="left-content">
-                        <!-- <audio controls>
-                                    <source src="assets/audio/AUD-20170805-WA0000.mp3" type="audio/mp3">
-                                  Your browser does not support the audio element.
-                                  </audio>
-                            <audio controls>
-                                <source src="assets/audio/captainplanet24.mp3" type="audio/mp3">
-                                Your browser does not support the audio element.
-                                </audio> -->
-                        <!-- <div>
-
-                                </div> -->
                         <div id="left-div"><span id="left-img"></span>
 
                         </div>
@@ -97,11 +98,12 @@
                 
 
             </div>
-            <div class="jump col-md-12">
+            <div class="jump col-sm-12 col-md-12 col-lg-12">
                 <div class="view">
                     
                     <div class="scrollbar scrollbar-secondary preview col-md-6">
                         <h5>Beats By Sovereign. Click Listen To Explore</h5>
+                        <div class="music-player"></div>
                         <div id="music-list">                       
                             <!-- <ol type="1">
                             <li>lepi</li>
@@ -112,6 +114,7 @@
                     </div>
                     <div class=" scrollbar scrollbar-secondary preview col-md-3">
                         <h5> Recent Uploads</h5>
+                        <div class="music-player"></div>
                         <div id="recentUploads">
                             <!-- <ol  type="1">
                             <li>lepi</li>
@@ -152,9 +155,10 @@
             </div>
 
 
-            <div class="col-md-12 bottom">
-                <div class="col-md-12 picks">
+            <div class=" col-sm-12 col-md-12 col-lg-6 bottom">
+                <div class="col-lg-12 picks">
                     <h5>All Beats Click to Explore</h5>
+                    <div class="music-player"></div>
                     <div id="allBeats"></div>
 
                 </div>
@@ -187,21 +191,27 @@
                         </div> -->
                     </div>
                     
-                    <div class="scrollbar scrollbar-secondary picks preview col-md-12">
-                            <table id="results" class="highlight">
+                    <div class="scrollbar scrollbar-secondary picks preview col-sm-12 col-md-12 col-lg-6 mongo">
+                        <div class="music-player"></div>
+                        <div id="mongo">
+                            
+                            <div id="table">
+                                <!-- <table id="results" class="highlight">
                                     <thead>
-                                      <tr>
-                                        <th id="beat-name">Beat Name</th>
-                                        <th id="producer-name">Producer</th>
-                                        <th id="source">Source</th>
-                                        <th id="salePrice">Price</th>
-                                      </tr>
+                                        <tr>
+                                            <th id="beat-name">Beat Name</th>
+                                            <th id="producer-name">Producer</th>
+                                            <th id="source">Source</th>
+                                            <th id="salePrice">Price</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                      <!-- Results from DB here -->
+                                         Results from DB here 
                                     </tbody>
-                                  </table>
-        
+                                </table> --> 
+                            </div>
+                            
+                        </div>
                     </div>
 
             <!--Footer-->
@@ -247,7 +257,7 @@
                 </div>
     </div>
 
-
+</div>
     
 <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase.js"></script>
 <script>

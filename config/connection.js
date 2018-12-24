@@ -1,4 +1,4 @@
-// Set up MySQL connection.
+// Set up MySQL connection. 
 let mySql = require("mysql");
 let mongojs = require("mongojs");
 let mongoose = require("mongoose");
@@ -16,14 +16,20 @@ let connection = mySql.createConnection({
 mongoose.connect("mongodb://localhost/music")
 let db = mongoose.connection
 
+// mongoose.connect("mongodb://localhost/cart")
+// let db3 = mongoose.connection
 
 // Database configuration
 // Save the URL of our database as well as the name of our collection
 let databaseUrl = "music";
-let collections = ["beats"];
+let collections = ["beats", "purchases"];
+
+// let cartUrl = "cart";
+// let collections2 = ["purchases"];
 
 // Use mongojs to hook the database to the db variable
 let db2 = mongojs(databaseUrl, collections);
+// let db4 = mongojs(cartUrl, collections2);
 
 // This makes sure that any errors are logged if mongodb runs into an issue
 db.on("error", function(error) {
@@ -33,6 +39,14 @@ db.on("error", function(error) {
 db2.on("error", function(error) {
   console.log("Database Error:", error);
 });
+
+// db3.on("error", function(error) {
+//   console.log("Database Error:", error);
+// });
+
+// db4.on("error", function(error) {
+//   console.log("Database Error:", error);
+// });
 
 // let connection2 = mySql.createConnection({
 //   host: "localhost",
@@ -144,5 +158,6 @@ connection.connect(function(err) {
 
 module.exports = {
   connection: connection,
-  url: 'mongodb://localhost:27017/music'
+  url: "mongodb://localhost:27017/music",
+  // url2: "mongodb://localhost:27017/cart"
 }

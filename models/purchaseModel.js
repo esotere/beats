@@ -5,7 +5,7 @@ let Schema = mongoose.Schema;
 
 // Using the Schema constructor, create a new UserSchema object
 // This is similar to a Sequelize model
-let BeatSchema = new Schema({
+let PurchaseSchema = new Schema({
   
 // _id         :   {
 //     type        :   String,
@@ -20,19 +20,19 @@ beatName: {
     // required: "beatname is Required"
   },
   
-  producer: {
-    type: String,
-    trim: true,
-    unique: false,
+//   producer: {
+//     type: String,
+//     trim: true,
+//     unique: false,
 
-    // required: "Producer is Required",
-    // validate: [
-    //   function(input) {
-    //     return input.length >= 6;
-    //   },
-    //   "Password should be longer."
-    // ]
-  },
+//     // required: "Producer is Required",
+//     // validate: [
+//     //   function(input) {
+//     //     return input.length >= 6;
+//     //   },
+//     //   "Password should be longer."
+//     // ]
+//   },
   price: {
     type: Number,
     unique: false,
@@ -59,8 +59,7 @@ beatName: {
 });
 
 // This creates our model from the above schema, using mongoose's model method
-let BeatAlt = mongoose.model("BeatAlt", BeatSchema);
-// let newBeat = new BeatAlt({"_id": 0, "beatName":"V", "producer": "x", "price": 1.00, "source": "path"}); // you also need here to define _id since, since you set it as required.
+let Purchase = mongoose.model("Purchase", PurchaseSchema);
 
 // Export the User model
-module.exports = BeatAlt;
+module.exports = Purchase;

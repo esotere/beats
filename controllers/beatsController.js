@@ -6,28 +6,62 @@ let fs = require("fs");
 // Import the model (beat.js) to use its database functions.
 let beat = require("../models/beat.js");
 let db = require("../models/beatModel.js");
+let buy = require("../models/purchaseModel.js");
+// let BeatAlt = require('mongoose').model('BeatAlt')
 
 // Requiring our models and passport as we've configured it
 // let db = require("../models/login.js");
 // let passport = require("../config/passport");
+ 
+
+// router.get("/api/music", function(req, res) {
+//   db.find({}, function(data) {
+//     let trkObject = {
+//       beats: data
+//     };
+//     console.log(trkObject);
+//     res.json(trkObject);
+//     // res.sendFile(path.join(__dirname, "../public/catalog.html"));
+//   });
+// });
+
+router.get("/api/music", function(req, res) {
+  db.find({}, (err, db) => {
+    if(err){
+        res.send(err);
+    }
+    res.json(db);
+    // res.json();
+    // res.sendFile(path.join(__dirname, "../public/catalog.html"));
+  });
+})
 
 
 
 // Post a beat to the mongoose database
 router.post("/api/music", (req,res) => {
-              console.log(JSON.stringify(req.body));
-              console.log(req);
+              console.log(req.body);
+              // console.log(req);
 
   
   // Save the request body as an object called track
   let track = { 
     // _id: req.body.id,
-    name: req.body.beat_name,
+    beatName: req.body.beat_name,
     producer: req.body.producer_name,
     price: req.body.price,
     source: req.body.file_source,
-  }
-            console.log(track);
+  };
+  console.log(track);
+ 
+  db.create(track)
+    .then(function(item) {
+    // Show any errors
+      // item = track;
+      // console.log(item);
+    }).catch(function(err) {
+      console.log(err.message);
+    });
 
   // db.BeatAlt.create([
   //   "beat_name", "producer_name", "price", "source"
@@ -55,13 +89,13 @@ router.post("/api/music", (req,res) => {
   // beat.read = false;
 
   // Save the beat object as an entry into the beats collection in mongo
-  db.BeatAlt.save(track.name, track.producer, track.price, track.source).then(function(item) {
-    // Show any errors
-      // item = track;
-      // console.log(item);
-    }).catch(function(err) {
-      console.log(err.message);
-    });
+  // db.BeatAlt.save(track.name, track.producer, track.price, track.source).then(function(item) {
+  //   // Show any errors
+  //     // item = track;
+  //     // console.log(item);
+  //   }).catch(function(err) {
+  //     console.log(err.message);
+  //   });
   
     // else {
     //   // Otherwise, send the response to the client (for AJAX success function)
@@ -72,18 +106,18 @@ router.post("/api/music", (req,res) => {
 
 
 // Fetch all Beats
-exports.findAll = (req, res) =>  {
-	console.log("Fetch all Beats");
+// exports.findAll = (req, res) =>  {
+// 	console.log("Fetch all Beats");
 	
-    BeatAlt.find()
-    .then(beats => {
-        res.send(beats);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message
-        });
-    });
-};
+//     BeatAlt.find()
+//     .then(beats => {
+//         res.send(beats);
+//     }).catch(err => {
+//         res.status(500).send({
+//             message: err.message
+//         });
+//     });
+// };
 
 
 // //Save a beat to MongoDB
@@ -106,15 +140,24 @@ exports.findAll = (req, res) =>  {
 // Route for getting all beats from the db
 router.get("/landing", function(req, res) {
   // Using our BeatAlt model, "find" every beat in our db
-  db.BeatAlt.find({})
-    .then(function(beat) {
-      // If any Beats are found, send them to the client
-      res.json(beat);
-    })
-    .catch(function(err) {
-      // If an error occurs, send it back to the client
-      res.json(err);
-    });
+  db.find({}, (err, db) => {
+    if(err){
+        res.send(err);
+    }
+    res.json(db);
+    // res.json();
+    // res.sendFile(path.join(__dirname, "../public/catalog.html"));
+  });
+ 
+  // db.BeatAlt.find({})
+  //   .then(function(beat) {
+  //     // If any Beats are found, send them to the client
+  //     res.json(beat);
+  //   })
+  //   .catch(function(err) {
+  //     // If an error occurs, send it back to the client
+  //     res.json(err);
+  //   });
 });
 
 
@@ -171,35 +214,95 @@ router.get("/catalog", function(req, res) {
   });
 });
 
-router.get("/cart", function(req, res) {
-  // beat.find(function(data) {
-  //   let hbsObject = {
-  //     beats: data
-  //   };
-    // console.log(hbsObject);
-    // res.json(hbsObject);
-    res.sendFile(path.join(__dirname, "../public/shoppingCart.html"));
-  // });
+router.get("/api/music/purchase", function(req, res) {
+  buy.find({}, (err, db) => {
+    if(err){
+      res.send(err);
+  }
+  res.json(db);
+    // res.sendFile(path.join(__dirname, "../public/shoppingCart.html"));
+  });
 });
+
+// Post a beat to the mongoose cart database
+router.post("/api/music/purchase", (req,res) => {
+  console.log(req.body);
+  // console.log(req);
+
+    // Save the request body as an object called track
+    let track = { 
+    // _id: req.body.id,
+    beatName: req.body.beat_name,
+    producer: req.body.producer_name,
+    price: req.body.price,
+    source: req.body.file_source,
+    };
+    console.log(track);
+
+    buy.create(track)
+       .then(function(item) {
+      // Show any errors
+      // item = track;
+      // console.log(item);
+      }).catch(function(err) {
+    console.log(err.message);
+    });
+
+});
+
+
+
+
+
+
 
 
 
 
 // define a route music it creates readstream to the requested file and pipes the output to response
 
-router.get('/music', function(req,res){
+router.get('/api/music/beatalts', function(req,res){
+
+  console.log(req)
+  // console.log(req)
+  // console.log(req.url)
+
+  // db.find({source: filename}, (err, db) => {
+  //   if(err){
+  //       res.send(err);
+  //   }
+  //   res.json(db);
+  //   // res.json();
+  //   // res.sendFile(path.join(__dirname, "../public/catalog.html"));
+  // });
 	
-	var fileId = req.query.id; 
-	var file = __dirname + '/music/' + fileId;
-	fs.exists(file,function(exists){
+  let fileId = req.output; 
+  // console.log(JSON.stringify(fileId))
+  let filename = __dirname + '/api/music/beatalts/' + "AUD-20170805-WA0000.mp3";
+  console.log(filename)
+
+  // let readStream = fs.createReadStream(filename);
+
+  // readStream.on('open', function () {
+  //   // This just pipes the read stream to the response object (which goes to the client)
+  //   readStream.pipe(res);
+  // });
+
+  // // This catches any errors that happen while creating the readable stream (usually invalid names)
+  // readStream.on('error', function(err) {
+  //   res.end(err);
+  // });
+
+
+	fs.exists(filename, function(exists){
 		if(exists)
 		{
-			var rstream = fs.createReadStream(file);
+			let rstream = fs.createReadStream(filename);
 			rstream.pipe(res);
 		}
 		else
 		{
-			res.send("Its a 404");
+			res.send(404, 'Sorry, cant find that');
 			res.end();
 		}
 	
@@ -212,19 +315,19 @@ router.get('/music', function(req,res){
 // installed plugins.
 
 router.get('/download', function(req,res){
-	var fileId = req.query.id;
-	var file = __dirname + '/music/' + fileId;
+	let fileId = req.query.id;
+	let file = __dirname + '/music/' + fileId;
 	fs.exists(file,function(exists){
 		if(exists)
 		{
 			res.setHeader('Content-disposition', 'attachment; filename=' + fileId);
 			res.setHeader('Content-Type', 'application/audio/mpeg3')
-			var rstream = fs.createReadStream(file);
+			let rstream = fs.createReadStream(file);
 			rstream.pipe(res);
 		}
 		else
 		{
-			res.send("Its a 404");
+			res.send(404, 'Sorry, cant find that');
 			res.end();
 		}
 	});
